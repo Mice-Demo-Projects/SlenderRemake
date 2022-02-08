@@ -1,0 +1,4 @@
+repository "Slender@local"
+  path "/"
+    br "/main"
+    co "/main"
