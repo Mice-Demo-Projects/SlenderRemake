@@ -1,11 +1,20 @@
 fileFormatVersion: 2
-guid: e184ffab5a850394697ec38396621f36
+guid: e4c66979d6bca564292818253c0623fe
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: 8882975935929413487
-    second: armature_stickman_1|Armature|mixamo.com|Layer0
+      74: -5424571408065001986
+    second: armature_stickman_4|Armature|mixamo.com|Layer0
+  - first:
+      74: 496871711650896732
+    second: armature_stickman_4|Armature|mixamo.com|Layer0.001
+  - first:
+      74: 4817478476319446706
+    second: armature_stickman_4|Armature|mixamo.com|Layer0.002
+  - first:
+      74: 7433149178555275413
+    second: armature_stickman_4|Armature|mixamo.com|Layer0.003
   externalObjects: {}
   materials:
     materialImportMode: 2
