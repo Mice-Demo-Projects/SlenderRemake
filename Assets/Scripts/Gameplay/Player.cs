@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     [System.NonSerialized] public EvolveStates state;
     [System.NonSerialized] public int stateIndex;
     [System.NonSerialized] public EvolveStates prevState;
-    [System.NonSerialized] public List<string> evolveStateTexts = new List<string>();
     #endregion
     private void Awake()
     {
@@ -42,6 +41,7 @@ public class Player : MonoBehaviour
         prevState = state;
         evolveValue += amount;
         EvolveControl();
+        PlayerCanvas.instance.ChangeFillAmount(amount);
         if (InputPanel.instance.holdDetection)
         {
             // Yürürken evolve olma durumunda yeni skin için animasyon tekrar oynatýlýr.
@@ -81,8 +81,11 @@ public class Player : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 skinHolder.GetChild(i).gameObject.SetActive(false);
+                PlayerCanvas.instance.title.GetChild(i).gameObject.SetActive(false);
             }
             skinHolder.GetChild(stateIndex).gameObject.SetActive(true);
+            PlayerCanvas.instance.title.GetChild(stateIndex).gameObject.SetActive(true);
+
         }
     }
     private void Update()
