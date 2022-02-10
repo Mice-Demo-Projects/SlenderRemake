@@ -15,4 +15,8 @@ public class PlayerAnimation : MonoBehaviour
     {
         transform.GetChild(Player.instance.stateIndex).transform.GetComponent<Animator>().Play(animation);
     }
+    public void StopAnimation()
+    {
+        //transform.GetChild(Player.instance.stateIndex).transform.GetComponent<Animator>().speed = 0f;
+    }
 }

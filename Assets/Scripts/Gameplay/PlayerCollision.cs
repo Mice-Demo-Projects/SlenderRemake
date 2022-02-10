@@ -24,15 +24,26 @@ public class PlayerCollision : MonoBehaviour
             }
             else
             {
-                CompletePanel.instance.Activator(false);
-                PlayerAnimation.instance.PlayAnimation("Salsa");
+                Player.instance.Lose();
             }
         }
-
         if (other.CompareTag("Finish"))
         {
-            LevelManager.gameState = GameState.Finish;
+            if (Player.instance.stateIndex > 0)
+            {
+                LevelManager.gameState = GameState.Finish;
+                PlayerMovement.instance.FinalWalk();
+            }
+            else
+            {
+                Player.instance.Lose();
+            }
         }
+        if (other.CompareTag("FinishCube") && PlayerMovement.instance.gliding == true)
+        {
+            FinalGradient.instance.Paint(other);
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {

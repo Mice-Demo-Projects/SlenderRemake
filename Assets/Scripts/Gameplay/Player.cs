@@ -42,6 +42,10 @@ public class Player : MonoBehaviour
         evolveValue += amount;
         EvolveControl();
         PlayerCanvas.instance.ChangeFillAmount(amount);
+        if (evolveValue < 0)
+        {
+            Lose();
+        }
         if (InputPanel.instance.holdDetection)
         {
             // Yürürken evolve olma durumunda yeni skin için animasyon tekrar oynatýlýr.
@@ -85,6 +89,11 @@ public class Player : MonoBehaviour
             skinHolder.GetChild(stateIndex).gameObject.SetActive(true);
             PlayerCanvas.instance.title.GetChild(stateIndex).gameObject.SetActive(true);
         }
+    }
+    public void Lose()
+    {
+        CompletePanel.instance.Activator(false);
+        PlayerAnimation.instance.PlayAnimation("Salsa");
     }
     private void Update()
     {

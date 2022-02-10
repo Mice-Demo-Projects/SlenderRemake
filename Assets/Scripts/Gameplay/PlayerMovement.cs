@@ -63,8 +63,44 @@ public class PlayerMovement : MonoBehaviour
         PlayerAnimation.instance.PlayAnimation("Landing");
         transform.DOMoveY(0, 0.6f);
     }
-    public void Final()
+    public void FinalWalk()
     {
-        //transform.DOMove()
+        PlayerAnimation.instance.PlayAnimation("Walk");
+        transform.DOLocalMove(new Vector3(Final.instance.coffins.position.x, 0, Final.instance.coffins.position.z+13f), 1.5f).OnComplete(() =>
+        {
+            PlayerAnimation.instance.transform.Rotate(new Vector3(0,180,0));
+            PlayerAnimation.instance.PlayAnimation("Sit");
+            gliding = true;
+            FinalRise();
+        }); ;
+    }
+    public void FinalRise()
+    {
+        Final.instance.coffins.SetParent(transform);
+        float riseAmount;
+        switch (Player.instance.state)
+        {
+            case Player.EvolveStates.Freaky:
+                riseAmount = 3f;
+                break;
+            case Player.EvolveStates.Horrible:
+                riseAmount = 10f;
+                break;
+            case Player.EvolveStates.Monster:
+                riseAmount = 16f;
+                break;
+            default:
+                riseAmount = 0f;
+                break;
+        }
+        transform.DOLocalMoveY(riseAmount,5f).OnComplete(() =>
+        {
+            StartCoroutine(Win());
+        }); ; ;
+    }
+    IEnumerator Win()
+    {
+        yield return new WaitForSeconds(1f);
+        CompletePanel.instance.Activator(true);
     }
 }

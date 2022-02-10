@@ -21,13 +21,15 @@ public class InputPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        holdDetection = true;
-        PlayerAnimation.instance.PlayAnimation("Walk");
-
+        if (LevelManager.gameState == GameState.Normal)
+        {
+            holdDetection = true;
+            PlayerAnimation.instance.PlayAnimation("Walk");
+        }
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (LevelManager.gameState == GameState.BeforeStart || LevelManager.gameState == GameState.Normal || !PlayerMovement.instance.gliding)
+        if (LevelManager.gameState == GameState.BeforeStart || LevelManager.gameState == GameState.Normal || !PlayerMovement.instance.gliding || LevelManager.gameState != GameState.Finish)
         {
             holdDetection = false;
             PlayerAnimation.instance.PlayAnimation("Idle");

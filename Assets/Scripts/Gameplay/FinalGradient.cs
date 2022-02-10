@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class FinalGradient : MonoBehaviour
 {
+    public static FinalGradient instance;
     public Gradient finalGradient;
-    private void Start()
+    public List<GameObject> coloredList = new List<GameObject>();
+    private void Awake()
     {
-        finalGradient.Evaluate(10);
-        for (int i = 0; i < transform.childCount; i++)
+        instance = this;
+    }
+    public void Paint(Collider other)
+    {
+        coloredList.Add(other.gameObject);
+        for (int i = 0; i < coloredList.Count; i++)
         {
-            transform.GetChild(i).GetComponent<MeshRenderer>().material.color = finalGradient.Evaluate(i);
+            transform.GetChild(i).GetComponent<MeshRenderer>().material.color = finalGradient.colorKeys[i].color;
+
         }
     }
 }
