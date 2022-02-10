@@ -27,9 +27,11 @@ public class InputPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        holdDetection = false;
-        PlayerAnimation.instance.PlayAnimation("Idle");
-
+        if (LevelManager.gameState == GameState.BeforeStart || LevelManager.gameState == GameState.Normal || !PlayerMovement.instance.gliding)
+        {
+            holdDetection = false;
+            PlayerAnimation.instance.PlayAnimation("Idle");
+        }
     }
     public void OnDrag(PointerEventData eventData)
     {

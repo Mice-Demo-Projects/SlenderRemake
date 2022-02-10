@@ -18,7 +18,15 @@ public class PlayerCollision : MonoBehaviour
         }
         if (other.GetComponent<Glider>() != null)
         {
-            transform.parent.GetComponent<PlayerMovement>().GlideOn();
+            if (Player.instance.stateIndex > 0)
+            {
+                transform.parent.GetComponent<PlayerMovement>().GlideOn();
+            }
+            else
+            {
+                CompletePanel.instance.Activator(false);
+                PlayerAnimation.instance.PlayAnimation("Salsa");
+            }
         }
 
         if (other.CompareTag("Finish"))
@@ -31,6 +39,16 @@ public class PlayerCollision : MonoBehaviour
         if (other.GetComponent<Glider>() != null)
         {
             transform.parent.GetComponent<PlayerMovement>().GlideOff();
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<Glider>() != null)
+        {
+            if (Player.instance.stateIndex > 0 && PlayerMovement.instance.gliding)
+            {
+                other.GetComponent<Glider>().GliderFollow();
+            }
         }
     }
 }

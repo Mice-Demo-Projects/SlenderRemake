@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     #region Variables
     [System.NonSerialized] float playerSpeed;
     [System.NonSerialized] float sensitivity;
+    [System.NonSerialized] public bool gliding;
+    [System.NonSerialized] public Vector3 playerPos;
 
     #endregion
     private void Awake()
@@ -30,13 +32,13 @@ public class PlayerMovement : MonoBehaviour
     {
         playerSpeed = 10f;
         sensitivity = 4f;
+        gliding = false;
     }
     public void MoveVertical()
     {
-        Vector3 playerPos = transform.position;
+        playerPos = transform.position;
         playerPos.z += playerSpeed * Time.deltaTime;
         transform.position = playerPos;
-
     }
     public void MoveHorizontal(float x)
     {
@@ -51,11 +53,15 @@ public class PlayerMovement : MonoBehaviour
     }
     public void GlideOn()
     {
+        gliding = true;
+        PlayerAnimation.instance.PlayAnimation("Jumping");
         transform.DOMoveY(6, 0.5f);
     }
     public void GlideOff()
     {
-       transform.DOMoveY(0, 1);
+        gliding = false;
+        PlayerAnimation.instance.PlayAnimation("Landing");
+        transform.DOMoveY(0, 0.6f);
     }
     public void Final()
     {
