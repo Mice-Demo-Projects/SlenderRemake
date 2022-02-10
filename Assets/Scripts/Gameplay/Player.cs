@@ -77,7 +77,6 @@ public class Player : MonoBehaviour
         if (state != prevState)
         {
             stateIndex = (int)state;
-            print(stateIndex);
             for (int i = 0; i < 4; i++)
             {
                 skinHolder.GetChild(i).gameObject.SetActive(false);
@@ -85,7 +84,6 @@ public class Player : MonoBehaviour
             }
             skinHolder.GetChild(stateIndex).gameObject.SetActive(true);
             PlayerCanvas.instance.title.GetChild(stateIndex).gameObject.SetActive(true);
-
         }
     }
     private void Update()
