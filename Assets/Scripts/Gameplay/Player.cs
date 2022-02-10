@@ -8,12 +8,17 @@ public class Player : MonoBehaviour
     public static Player instance;
 
     #region Variables
-    Transform skinHolder;
-    [System.NonSerialized] public int evolveIndex;
-    public EvolveStates state;
-    public EvolveStates prevState;
-    public List<string> evolveStateTexts = new List<string>();
+    [System.NonSerialized] public Transform skinHolder;
+    [System.NonSerialized] public int evolveValue;
+    [System.NonSerialized] public EvolveStates state;
+    [System.NonSerialized] public int stateIndex;
+    [System.NonSerialized] public EvolveStates prevState;
+    [System.NonSerialized] public List<string> evolveStateTexts = new List<string>();
     #endregion
+    private void Awake()
+    {
+        instance = this;
+    }
     public enum EvolveStates
     {
         Baby,
@@ -27,35 +32,41 @@ public class Player : MonoBehaviour
     }
     void SetValues()
     {
-        evolveIndex = 0;
+        evolveValue = 0;
+        stateIndex = 0;
         skinHolder = transform.GetChild(0);
     }
     public void EvolveShift(int amount)
     {
         // Evolve'umuzu etkileyen tüm faktörler bu fonksiyonu çaðýracak.
         prevState = state;
-        evolveIndex += amount;
+        evolveValue += amount;
         EvolveControl();
+        if (InputPanel.instance.holdDetection)
+        {
+            // Yürürken evolve olma durumunda yeni skin için animasyon tekrar oynatýlýr.
+            PlayerAnimation.instance.PlayAnimation("Walk");
+        }
     }
     void EvolveControl()
     {
         // Evolve olup olmadýðýmýz, olduysak ne olacaðý kontrol edilecek.
-        if (evolveIndex < 20)
+        if (evolveValue < 20)
         {
             state = EvolveStates.Baby;
             SkinSwap(state);
         }
-        else if (20 <= evolveIndex && evolveIndex < 40)
+        else if (20 <= evolveValue && evolveValue < 40)
         {
             state = EvolveStates.Freaky;
             SkinSwap(state);
         }
-        else if (40 <= evolveIndex && evolveIndex < 60)
+        else if (40 <= evolveValue && evolveValue < 60)
         {
             state = EvolveStates.Horrible;
             SkinSwap(state);
         }
-        else if (60 <= evolveIndex)
+        else if (60 <= evolveValue)
         {
             state = EvolveStates.Monster;
             SkinSwap(state);
@@ -65,7 +76,7 @@ public class Player : MonoBehaviour
     {
         if (state != prevState)
         {
-            int stateIndex = (int)state;
+            stateIndex = (int)state;
             print(stateIndex);
             for (int i = 0; i < 4; i++)
             {
@@ -85,5 +96,4 @@ public class Player : MonoBehaviour
             EvolveShift(-5);
         }
     }
-
 }

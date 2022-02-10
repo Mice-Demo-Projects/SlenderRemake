@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement instance;
     #region Variables
     [System.NonSerialized] float playerSpeed;
+    [System.NonSerialized] float sensitivity;
+
     #endregion
     private void Awake()
     {
@@ -27,18 +29,24 @@ public class PlayerMovement : MonoBehaviour
     void SetValues()
     {
         playerSpeed = 10f;
+        sensitivity = 4f;
     }
     public void MoveVertical()
     {
         Vector3 playerPos = transform.position;
         playerPos.z += playerSpeed * Time.deltaTime;
         transform.position = playerPos;
+
     }
-    public void MoveHorizontal()
+    public void MoveHorizontal(float x)
     {
         if (LevelManager.gameState == GameState.Normal)
         {
-
+            Vector3 temp = new Vector3(x, 0, 0);
+            transform.localPosition += temp * sensitivity;
+            Vector3 clamp = transform.localPosition;
+            clamp.x = Mathf.Clamp(clamp.x, -3.31f, 3.31f);
+            transform.localPosition = clamp;
         }
     }
     public void GlideOn()
@@ -47,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
     }
     public void GlideOff()
     {
-       transform.DOMoveY(0.8f, 1);
+       transform.DOMoveY(0, 1);
+    }
+    public void Final()
+    {
+        //transform.DOMove()
     }
 }

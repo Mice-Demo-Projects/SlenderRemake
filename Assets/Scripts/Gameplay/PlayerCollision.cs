@@ -11,10 +11,16 @@ public class PlayerCollision : MonoBehaviour
             other.GetComponent<Collectable>().Collect();
             transform.parent.GetComponent<Player>().EvolveShift(5);
         }
+        if (other.GetComponent<Obstacle>() != null)
+        {
+            other.GetComponent<Obstacle>().Collect();
+            transform.parent.GetComponent<Player>().EvolveShift(-5);
+        }
         if (other.GetComponent<Glider>() != null)
         {
             transform.parent.GetComponent<PlayerMovement>().GlideOn();
         }
+
         if (other.CompareTag("Finish"))
         {
             LevelManager.gameState = GameState.Finish;

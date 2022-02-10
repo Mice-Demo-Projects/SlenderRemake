@@ -22,13 +22,21 @@ public class InputPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
     public void OnPointerDown(PointerEventData eventData)
     {
         holdDetection = true;
+        PlayerAnimation.instance.PlayAnimation("Walk");
+
     }
     public void OnPointerUp(PointerEventData eventData)
     {
         holdDetection = false;
+        PlayerAnimation.instance.PlayAnimation("Idle");
+
     }
     public void OnDrag(PointerEventData eventData)
     {
+        if (LevelManager.gameState == GameState.Normal)
+        {
+            PlayerMovement.instance.MoveHorizontal(eventData.delta.x / Screen.width);
+        }
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
